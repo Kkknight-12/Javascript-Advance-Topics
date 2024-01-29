@@ -1,45 +1,45 @@
 // Using proxies for logging
 
 function Ninja() {
-  let _skillLevel = 0;
-  let name = "kk";
+  let _skillLevel = 0
+  let name = 'kk'
 
   this.WhatIsThis = function () {
-    return this;
-  };
+    return this
+  }
 
   // https://www.programiz.com/javascript/library/object/defineProperty
   // syntax of the defineProperty() method is:
   // Object.defineProperty(obj, prop, descriptor)
-  Object.defineProperty(this, "skillLevel", {
+  Object.defineProperty(this, 'skillLevel', {
     get: () => {
-      if ("skillLevel get method is called") {
+      if ('skillLevel get method is called') {
         // We log whenever the skillLevel property is read
-        console.log("get");
-        return _skillLevel;
+        console.log('get')
+        return _skillLevel
       }
     },
     set: (value) => {
-      if ("skillLevel set method is called") {
+      if ('skillLevel set method is called') {
         // and whenever the skillLevel property is written to.
-        console.log("set");
-        _skillLevel = value;
+        console.log('set')
+        _skillLevel = value
       }
     },
-  });
+  })
 }
 
-const ninja = new Ninja();
+const ninja = new Ninja()
 
 // Reads the skillLevel property and triggers the get method
-console.log("ninja.skillLevel ", ninja.skillLevel);
+console.log('ninja.skillLevel ', ninja.skillLevel)
 // 0
 
 // Writes to the skillLevel property and triggers the set method
-ninja.skillLevel = 4;
+ninja.skillLevel = 4
 
 // get
-console.log("new ninja.skillLevel ", ninja.skillLevel);
+console.log('new ninja.skillLevel ', ninja.skillLevel)
 // 4
 
 /*
@@ -65,30 +65,32 @@ function makeLoggable(target) {
   return new Proxy(target, {
     // A get trap that logs property reads
     get: (target, property) => {
-      return target[property];
+      return target[property]
     },
+
     // A set trap that logs property writes
     set: (target, property, value) => {
-      target[property] = value;
-      return true;
+      target[property] = value
+      return true
     },
-  });
+  })
 }
 
-let ninja2 = { name: "Yoshi" };
-ninja2 = makeLoggable(ninja2);
+let ninja2 = { name: 'Yoshi' }
+ninja2 = makeLoggable(ninja2)
 // A set trap that logs property writes
 
-console.log(ninja2.name); // Yoshi
+console.log(ninja2.name) // Yoshi
 
-ninja2.weapon = "sword";
-console.log(ninja2.weapon); // sword
+ninja2.weapon = 'sword'
+console.log(ninja2.weapon) // sword
 
-/*
+/**
  * Creates a new ninja object that will serve as our target object and make
- * it loggable */
+ * it loggable
+ * */
 
-/*
+/**
  * Here we define a makeLoggable function that takes a target object and
  * returns a new Proxy that has a handler with a get and a set trap.
  *

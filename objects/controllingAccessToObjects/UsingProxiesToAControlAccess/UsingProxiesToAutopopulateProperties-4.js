@@ -1,5 +1,5 @@
 /*
- * In addition to simplifying logging, proxies can be used for autopopulating
+ * In addition to simplifying logging, proxies can be used for auto-populating
  * properties. For example, imagine that you have to model your computer’s
  * folder structure, in which a folder object can have properties that can
  * also be folders. Now imagine that you have to model a file at the end of a
@@ -14,49 +14,64 @@
  * rootFolder.ninjasDir.firstNinjaDir.ninjaFile = "yoshi.txt";
  *
  * Seems a tad more tedious than necessary, doesn’t it? This is where
- * autopopulating properties comes into play; just take a look at the
+ * auto-populating properties comes into play; just take a look at the
  * following example.
  *  */
 
-// Autopopulating properties with proxies
+// Auto-populating properties with proxies
 function Folder() {
   // creating proxy inside Folder function
   return new Proxy(
     {},
     {
       get: (target, property) => {
-        console.log("Reading " + property);
+        console.log('Reading ' + property)
 
         if (!(property in target)) {
-          target[property] = new Folder();
+          target[property] = new Folder()
         }
 
         //
-        return target[property];
+        return target[property]
       },
-    }
-  );
+    },
+  )
 }
 
-const rootFolder = new Folder();
+const rootFolder = new Folder()
 
-console.log("rootFolder ", rootFolder);
+console.log('rootFolder ', rootFolder)
 
 try {
-  rootFolder.ninjaasDir.firstNinjaDir.ninjaFile = "Yosh.txt";
+  rootFolder.ninjaasDir.firstNinjaDir.ninjaFile = 'Yosh.txt'
 } catch (e) {
-  console.log("An exceprtion has occured");
+  console.log('An exceprtion has occured')
 }
 
-console.log("rootFolder ", rootFolder);
+console.log('rootFolder ', rootFolder)
 
-/*
- * We’re accessing a property, firstNinja- Dir, of an undefined property,
- * ninjas- Dir, of the rootFolder object. But if we run the code, you see
- * that all is well. This happens because we’re using proxies. Every time we
- * access a property, the proxy get trap is activated. If our folder object
- * already contains the requested property, its value is returned, and if it
- * doesn’t, a new folder is created and assigned to the property. This is how
- * two of our properties, ninjasDir and firstNinjaDir, are created.
- * Requesting a value of an uninitialized property triggers its creation.
- *  */
+/**
+ * The JavaScript Proxy object is used here to create a mechanism for
+ * auto-populating properties. The get trap in the Proxy is triggered every
+ * time a property is accessed on the object. If the property doesn't exist,
+ * it is created on-the-fly.
+ *
+ * When you execute rootFolder.ninjaasDir.firstNinjaDir.ninjaFile =
+ * 'Yosh.txt', the JavaScript engine tries to access the ninjaasDir property
+ * on rootFolder. Since ninjaasDir doesn't exist, the get trap is triggered,
+ * creating a new Folder instance and assigning it to ninjaasDir.
+ *
+ * Next, the engine tries to access firstNinjaDir on ninjaasDir. Again,
+ * since firstNinjaDir doesn't exist, the get trap is triggered, creating a
+ * new Folder instance and assigning it to firstNinjaDir.
+ *
+ * Finally, the engine tries to access ninjaFile on firstNinjaDir. Since
+ * ninjaFile doesn't exist, the get trap is triggered, creating a new Folder
+ * instance and assigning it to ninjaFile.
+ *
+ * Then, 'Yosh.txt' is assigned to ninjaFile, replacing the Folder instance.
+ *
+ * This process doesn't require a loop because the get trap is triggered for
+ * each property access, not just once. This allows for the creation of
+ * deeply nested properties with a single line of code.
+ * */

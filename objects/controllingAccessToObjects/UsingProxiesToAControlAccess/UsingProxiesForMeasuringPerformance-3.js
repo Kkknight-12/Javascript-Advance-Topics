@@ -8,14 +8,15 @@
 
 function isPrime(number) {
   if (number < 2) {
-    return false;
+    return false
   }
 
   for (let i = 2; i < number; i++) {
     if (number % i === 0) {
-      return false;
+      return false
     }
-    return true;
+
+    return true
   }
 }
 
@@ -24,25 +25,27 @@ isPrime = new Proxy(isPrime, {
   // provides an apply trap that will
   // be called whenever a proxy is called as a function
   apply(target, thisArg, argArray) {
-    console.log("target ", target); // [Function: isPrime]
-    console.log("thisArg ", thisArg); // undefined
-    console.log("argArray ", argArray); // argArray  [ 1299827 ]
+    console.log('target ', target) // [Function: isPrime]
+    console.log('thisArg ', thisArg) // undefined
+    console.log('argArray ', argArray) // argArray  [ 1299827 ]
 
-    console.time("isPrime");
+    console.time('isPrime')
 
-    const result = target.apply(thisArg, argArray);
+    // calling the function with this and arguments
+    //            isPrime.apply( undefined, [1299827] )
+    const result = target.apply(thisArg, argArray)
 
-    console.timeEnd("isPrime");
+    console.timeEnd('isPrime')
 
-    console.log("result ", result); // true
+    console.log('result ', result) // true
 
-    return result;
+    return result
   },
-});
+})
 
 // calling function. call works the same as if we had called the
 // original function.
-isPrime(1299827);
+isPrime(1299827)
 
 /*
  * In this example, we have a simple isPrime function in which we measure the
@@ -77,64 +80,65 @@ isPrime(1299827);
 // Example 1
 function factorial(n) {
   if (n === 0 || n === 1) {
-    return 1;
+    return 1
   } else {
-    return n * factorial(n - 1);
+    return n * factorial(n - 1)
   }
 }
 
 // Wrapping the factorial function within a proxy
 factorial = new Proxy(factorial, {
   apply(target, thisArg, argArray) {
-    console.log("Calling factorial with arguments:", argArray);
+    console.log('Calling factorial with arguments:', argArray)
 
-    const result = target.apply(thisArg, argArray);
+    const result = target.apply(thisArg, argArray)
 
-    console.log("Factorial result:", result);
+    console.log('Factorial result:', result)
 
-    return result;
+    return result
   },
-});
+})
 
 // Calling the factorial function
-console.log(factorial(5)); // Output: 120
+console.log(factorial(5)) // Output: 120
 
-console.log("---------------------------------"); // Output: 120
+console.log('---------------------------------') // Output: 120
 
 // Example 2
 function greet(name) {
-  console.log(`Hello, ${name}!`);
+  console.log(`Hello, ${name}!`)
 }
 
 // Wrapping the greet function within a proxy
 const greetProxy = new Proxy(greet, {
   apply(target, thisArg, argArray) {
+    console.log('this ', thisArg) // undefined
     // Manipulate the arguments
-    const modifiedArgs = argArray.map((arg) => arg.toUpperCase());
+    const modifiedArgs = argArray.map((arg) => arg.toUpperCase())
 
     // Call the original greet function with the modified arguments and this value
-    return target.apply(thisArg, modifiedArgs);
+    return target.apply(thisArg, modifiedArgs)
   },
-});
+})
 
 // Call the greet function through the proxy
-greetProxy("John"); // Output: Hello, JOHN!
+greetProxy('John') // Output: Hello, JOHN!
 
-console.log("---------------------------------"); // Output: 120
+console.log('---------------------------------') // Output: 120
 
 // Example 3
 function sayHello() {
-  console.log(`Hello, ${this.name}!`);
+  console.log(`Hello, ${this.name}!`)
 }
 
 const context = {
-  name: "John Doe",
-};
+  name: 'John Doe',
+}
 
 const sayHelloProxy = new Proxy(sayHello, {
   apply(target, thisArg, argArray) {
-    return target.apply(context, argArray);
+    return target.apply(context, argArray)
   },
-});
+})
 
-sayHelloProxy(); // Output: Hello, John Doe!
+sayHelloProxy() // Output: Hello, John Doe!

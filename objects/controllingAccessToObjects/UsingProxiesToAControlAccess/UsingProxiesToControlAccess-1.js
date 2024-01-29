@@ -4,50 +4,58 @@
  * to properties of an object.
  * */
 
-const emperor = { name: "Komei" };
+// syntax
+// let proxy = new Proxy(target, handler)
+
+const emperor = { name: 'Komei' }
 // The emperor is our target object.
 
 // Creates a proxy with the Proxy constructor that takes in the object the
 // proxy wraps...
 const representative = new Proxy(emperor, {
   get: (target, key) => {
-    if ("Reading " + key + " through a proxy") {
-      return key in target ? target[key] : "Don't bother the emperor!";
+    if ('Reading ' + key + ' through a proxy') {
+      return key in target ? target[key] : "Don't bother the emperor!"
     }
 
-    // ...and an object with traps that will be called when reading
-    // (get) and writing (set) to properties.
+    // ...and an object with traps that will be called when
+    // reading (get)
+    // and writing (set) to properties.
   },
+
   set: (target, key, value) => {
-    if ("Writing " + key + " through a proxy") {
-      target[key] = value;
-      return true;
+    if ('Writing ' + key + ' through a proxy') {
+      target[key] = value
+      return true
     }
   },
-});
+})
 
 /*
  * Accesses the name property both through the emperor object and through the
  * proxy object
  * */
-console.log("The emperor's name is Komei", emperor.name === "Komei");
+
+// Accesses the name property through emperor object
+console.log("The emperor's name is Komei", emperor.name === 'Komei')
 //  true
 
-console.log(representative.name);
+console.log(representative.name)
 // Komei
 
+//  Accesses the name property through proxy object
 console.log(
-  representative.name === "Komei",
-  "We can get the name property through a proxy"
-); // true
+  representative.name === 'Komei',
+  'We can get the name property through a proxy',
+) // true
 
 /*
  * Accessing a non existing property directly on the object returns
  * undefined.  */
 console.log(
   emperor.nickname === undefined,
-  "The emperor doesn’t have a nickname "
-);
+  'The emperor doesn’t have a nickname ',
+)
 // true
 
 /*
@@ -56,22 +64,22 @@ console.log(
  *  */
 console.log(
   representative.nickname === "Don't bother the emperor!",
-  "The" + " proxy jumps in when we make in proper requests"
-);
+  'The' + ' proxy jumps in when we make in proper requests',
+)
 // true
 
 /*
  * Adds a property through the proxy. The property is accessible both through
  * the target object and through the proxy.
  *  */
-representative.nickname = "Tenno";
-console.log(emperor.nickname === "Tenno", "The emperor now has a nickname");
+representative.nickname = 'Tenno'
+console.log(emperor.nickname === 'Tenno', 'The emperor now has a nickname')
 // true
 
 console.log(
-  representative.nickname === "Tenno",
-  "The nickname is also accessible through the proxy"
-);
+  representative.nickname === 'Tenno',
+  'The nickname is also accessible through the proxy',
+)
 // true
 
 /*
