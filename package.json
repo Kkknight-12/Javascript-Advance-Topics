@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon objects/dealingWIthCollections/arrays/commonOperationsOnArrays-3/Mapping-2.js"
+    "dev": "nodemon objects/dealingWIthCollections/arrays/Built-inArrayFunctions-4.js"
   },
   "author": "",
   "license": "ISC",

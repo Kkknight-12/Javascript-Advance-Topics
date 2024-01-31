@@ -19,6 +19,7 @@
 
 // The following snippet shows how to use the every method to test whether all
 // the items in an array are numbers:
+
 const items = [1, 2, 3, 4, 5]
 const allNumbers = items.every((item) => {
   return typeof item === 'number'
@@ -34,6 +35,11 @@ const someNumbers = items2.some((item) => {
 
 console.log(someNumbers)
 
+// ----------------------------------------------------------
+// Searching arrays
+
+// find
+
 // The following snippet shows how to use the find method to find the first
 // number in an array:
 const items3 = [1, 2, 3, 4, 5, 6]
@@ -42,19 +48,52 @@ const firstEvenItem = items3.find((item) => {
 })
 console.log(firstEvenItem)
 
+// filter
+
+// The following snippet shows how to use the filter method to find all the
+// numbers in an array that satisfy a certain condition:
+const items5 = [1, 2, 3, 4, 5, 6]
+const evenItems = items5.filter((item) => {
+  return item % 2 === 0
+})
+console.log(evenItems)
+
+// indexOf
+
+// The following snippet shows how to use the indexOf method to find the index
+// of the first occurrence of a certain value in an array:
+const items5B = [1, 2, 3, 4, 5, 5, 6]
+const indexOf5 = items5B.indexOf(5)
+console.log('indexOf5 ', indexOf5) // 4
+
+// findIndex -
+// when we don’t have a reference to the exact item whose index we
+// want to search for, we can use the findIndex
+
 // The following snippet shows how to use the findIndex method to find the
 // index of the first number in an array:
 const items4 = [1, 2, 3, 4, 5, 6]
 const firstEvenItemIndex = items4.findIndex((item) => {
   return item % 2 === 0
 })
-console.log(firstEvenItemIndex)
+console.log('firstEvenItemIndex ', firstEvenItemIndex)
+// return undefined if no item passes the test
+
+// lastIndexOf
+
+// The following snippet shows how to use the lastIndexOf method to find the
+// index of the last occurrence of a certain value in an array:
+const items5A = [1, 2, 3, 4, 5, 5, 6]
+const lastIndexOf5 = items5A.lastIndexOf(5)
+console.log(lastIndexOf5) // 5
+
+// includes
 
 // The following snippet shows how to use the includes method to test whether
 // an array contains a certain value:
-const items5 = [1, 2, 3, 4, 5, 6]
+const items6 = [1, 2, 3, 4, 5, 6]
 
-const includes1 = items5.includes(1)
+const includes1 = items6.includes(1)
 console.log(includes1)
 
 const includes2 = items5.includes(0)
@@ -62,10 +101,10 @@ console.log(includes2)
 
 // The following snippet shows how to use the includes method to test whether
 // an array contains a certain value starting from a certain index:
-const items6 = [1, 2, 3, 4, 5, 6]
+const items7 = [1, 2, 3, 4, 5, 6]
 
-const includes3 = items6.includes(1, 1)
+const includes3 = items7.includes(1, 1)
 console.log(includes3)
 
-const includes4 = items6.includes(1, 2)
+const includes4 = items7.includes(1, 2)
 console.log(includes4)
