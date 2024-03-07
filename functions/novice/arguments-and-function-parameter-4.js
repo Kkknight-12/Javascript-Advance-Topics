@@ -13,12 +13,12 @@ function assassin(name) {
 }
 
 //                  arguments
-console.log(assassin("Ezio"))
+console.log(assassin('Ezio'))
 
 let performAction = function (person, action) {
   return `${person} ${action}`
 }
-console.log(performAction("shot", "fire arrow"))
+console.log(performAction('shot', 'fire arrow'))
 
 let longBow = (range) => `${range} meter`
 
@@ -37,10 +37,10 @@ function practice(language, IDE, source) {
   console.log(`I am practicing ${language} on ${IDE} from ${source}`)
 }
 
-practice("Javascript")
+practice('Javascript')
 // I am practicing Javascript on undefined from undefined
 
-console.log("-----Arguments parameters ends-------")
+console.log('-----Arguments parameters ends-------')
 // --------------------------------------------------
 
 // ////////////////
@@ -57,7 +57,7 @@ multiMax(193, 1, 2, 3)
 - Only the last function parameter can be a rest parameter
 */
 
-console.log("-----rest parameter ends-------")
+console.log('-----rest parameter ends-------')
 // --------------------------------------------------
 
 // ///////////////////
@@ -66,20 +66,20 @@ console.log("-----rest parameter ends-------")
 
 // taking default parameter before es6
 function performActionB(ninja, action) {
-  action = typeof action === "undefined" ? "sneak" : action
-  return ninja + " " + action
+  action = typeof action === 'undefined' ? 'sneak' : action
+  return ninja + ' ' + action
 }
 
-console.log(performActionB("hattori"))
+console.log(performActionB('hattori'))
 
 // ES6 added support for default parameters
-function performActionD(ninja, action = "sneak") {
-  return ninja + " " + action
+function performActionD(ninja, action = 'sneak') {
+  return ninja + ' ' + action
 }
 
-console.log(performActionD("Hanzo"))
+console.log(performActionD('Hanzo'))
 // if we specify value, default value is overridden
-console.log(performActionD("Hanzo", "super ninja"))
+console.log(performActionD('Hanzo', 'super ninja'))
 
 // //////////////////////////////
 // implicit function parameters /
@@ -100,20 +100,20 @@ function abc(a, b, b) {
   console.log(`argument 1 is ${arguments[0]}`) // argument 1 is a
   console.log(`argument 2 is ${arguments[1]}`) // argument 2 is b
   console.log(`argument 3 is ${arguments[2]}`) // argument 3 is c
-  console.log("arguments", arguments)
+  console.log('arguments', arguments)
   // { '0': 'a', '1': 'b', '2': 'c' }
-  console.log("typeof arguments", typeof arguments)
+  console.log('typeof arguments', typeof arguments)
   // object
 }
 
-abc("a", "b", "c")
+abc('a', 'b', 'c')
 
 // checking the length of arguments passed
 // with arguments.length
 function agrLength(a, b, c, d) {
-  console.log("arguments length", arguments.length)
+  console.log('arguments length', arguments.length)
 }
-agrLength("a", "b", "c", "d") // // 4
+agrLength('a', 'b', 'c', 'd') // // 4
 
 // ------------------------------------------------------------------------------------
 
@@ -124,7 +124,7 @@ work on it
 
 function sum() {
   var sum = 0
-  console.log("typeof sum args", typeof arguments)
+  console.log('typeof sum args', typeof arguments)
   for (var i = 0; i < arguments.length; i++) {
     sum += arguments[i]
   }
@@ -149,11 +149,10 @@ which gives us advantage over arguments.
 */
 
 function resSum(...a) {
-  let lis = a // we could also directly have written a.length in loop
   var sum = 0
-  for (var i = 0; i < lis.length; i++) {
-    sum += lis[i]
-  }
+  a.forEach((item) => {
+    sum += item
+  })
   return sum
 }
 console.log(resSum(1, 2, 3, 4, 5)) // 15
@@ -166,11 +165,11 @@ console.log(resSum(1, 2, 3, 4, 5)) // 15
 function infiltrate(person) {
   // accessing value 'Mali Bhaia' through parameter person
   // and also through arguments object.
-  if (person === "Kaido Fortress") {
+  if (person === 'Kaido Fortress') {
     console.log(person) // Kaido Fortress
   }
-  if (arguments[0] === "Kaido Fortress") {
-    console.log("Luffy will penetrate through the defence") // Bingo
+  if (arguments[0] === 'Kaido Fortress') {
+    console.log('Luffy will penetrate through the defence') // Bingo
   }
 
   /*
@@ -180,17 +179,17 @@ function infiltrate(person) {
 
     changing parameter
   */
-  arguments[0] = "Luffy, Zoro, Kid, Yamato"
+  arguments[0] = 'Luffy, Zoro, Kid, Yamato'
   console.log(person) // Luffy, Zoro, Kid, Yamato
 
   /*
     same is true if we change parameter, the changes can be observed in paramter and arguments
   */
-  person = "Sanji, Nami, Yoho Ho ho, Samurai, Ussop, Chopper are on there way"
+  person = 'Sanji, Nami, Yoho Ho ho, Samurai, Ussop, Chopper are on there way'
   console.log(arguments[0]) // Sanji, Nami, Yoho Ho ho, Samurai, Ussop, Chopper are on there way
 }
 
-infiltrate("Kaido Fortress")
+infiltrate('Kaido Fortress')
 /*
 - arguments object is an alias for the function parameters, if we change the arguments object, the change is also reflected in the matching function parameter.
 

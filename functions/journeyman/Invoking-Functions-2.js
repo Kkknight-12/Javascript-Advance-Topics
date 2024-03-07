@@ -3,9 +3,27 @@
  * invoked. It refers to an object that's associated with the function
  * invocation. Often termed as FUNCTION CONTEXT.
  *
+ * Example:
+ * let obj = {
+ *      value: 'Hello, World!',
+ *      print: function() {
+ *                console.log(this.value);
+ *            }
+ * };
+ * here obj is the context of the print function.
+ * this refers to obj.
+ * obj.print(); // Hello, World!
+ *
+ *
  * what this parameter points to isn't defined only by how and where the
  * function is defined, but it also heavily influenced by how function is
  * invoked.
+ *
+ * function print() {
+ *      'use strict';
+ *      console.log(this);
+ * }
+ * print(); // logs undefined
  */
 
 /** the manner in which a function is invoked has a huge impact on how the
@@ -36,13 +54,13 @@
 // Simple function /
 // /////////////////
 function ninja() {} // function declaration
-ninja();
+ninja()
 
 // expression to which the () operator is applied
 // doesn’t reference the function as a property of an object.
-var samurai = function () {}; // function expresion
-samurai("a");
-(function () {})(); // Immediately invoked expression invoked as a function
+var samurai = function () {} // function expresion
+samurai('a')
+;(function () {})() // Immediately invoked expression invoked as a function
 
 // //////////////////////////////////////////
 // behaviour of this in simple function    //
@@ -51,55 +69,55 @@ samurai("a");
 function ninja() {
   // return this // => window
 }
-console.log(ninja()); // return window object
+console.log(ninja()) // return window object
 
 function samurai() {
-  ("use strict");
-  return this; // undefined
+  ;('use strict')
+  return this // undefined
 }
-console.log(samurai()); // return undefined
+console.log(samurai()) // return undefined
 
 //
 function WhatIsThis() {
   this.normalFunc = function () {
-    return this; // object
-  };
+    return this // object
+  }
   this.arrowFunc = () => {
-    return this; // object
-  };
+    return this // object
+  }
   this.nestedNormal = function () {
     return function () {
       // return this // global
-    };
-  };
+    }
+  }
   this.nestedNormal2 = function () {
-    return () => this; // object
-  };
+    return () => this // object
+  }
 
   this.nestedArrow = () => {
-    return () => this; // object
-  };
+    return () => this // object
+  }
 
   this.nestedArrow2 = () => {
     return function () {
       // return this // global
-    };
-  };
+    }
+  }
 }
 
-const getWhatIsThis = new WhatIsThis();
+const getWhatIsThis = new WhatIsThis()
 // object
-console.log("normalFunc", getWhatIsThis.normalFunc());
+console.log('normalFunc', getWhatIsThis.normalFunc())
 // object
-console.log("arrowFunc", getWhatIsThis.arrowFunc());
+console.log('arrowFunc', getWhatIsThis.arrowFunc())
 // global
-console.log("nestedNormal", getWhatIsThis.nestedNormal()());
+console.log('nestedNormal', getWhatIsThis.nestedNormal()())
 // object
-console.log("nestedNormal2", getWhatIsThis.nestedNormal2()());
+console.log('nestedNormal2', getWhatIsThis.nestedNormal2()())
 // object
-console.log("nestedArrow", getWhatIsThis.nestedArrow()());
+console.log('nestedArrow', getWhatIsThis.nestedArrow()())
 // global
-console.log("nestedArrow2", getWhatIsThis.nestedArrow2()());
+console.log('nestedArrow2', getWhatIsThis.nestedArrow2()())
 
 // ------------------------------------------------------------------------------
 
@@ -108,13 +126,13 @@ console.log("nestedArrow2", getWhatIsThis.nestedArrow2()());
 // ////////////////////////////////
 
 // function is assigned to a property of an object
-let ninjaObj = {};
+let ninjaObj = {}
 ninjaObj.skill = function () {
-  console.log("you got me");
-};
+  console.log('you got me')
+}
 
 // invocation occurs by referencing the function using that property
-ninjaObj.skill();
+ninjaObj.skill()
 
 /* 
 special thing about it is object to which a method belongs
@@ -127,11 +145,11 @@ function via 'this' parameter.
 */
 
 function getMyThis() {
-  return this;
+  return this
 }
 
 function getName() {
-  return this.name;
+  return this.name
 }
 
 const thisObj = {
@@ -143,18 +161,18 @@ const thisObj = {
 
   getNameValue: getName,
 
-  name: "knight",
-};
+  name: 'knight',
+}
 // return this which is whole object so we are getting whole object as return value
-console.log("thisObj", thisObj.checkingThis());
+console.log('thisObj', thisObj.checkingThis())
 // this refer to object
 /* {
   checkingThis: [Function: getMyThis],
   getNameValue: [Function: getName],
   name: 'knight'
 } */
-console.log(thisObj.checkingThis() === thisObj); // true
-console.log(thisObj.getNameValue()); // knight
+console.log(thisObj.checkingThis() === thisObj) // true
+console.log(thisObj.getNameValue()) // knight
 
 /* 
 Look closely the getMyThis and getName are normal function.
@@ -166,8 +184,8 @@ thisObj which is invoking it.
 
 const thisObjTwo = {
   checkingThisAgain: getMyThis,
-};
-console.log(thisObjTwo.checkingThisAgain() === thisObjTwo); // true
+}
+console.log(thisObjTwo.checkingThisAgain() === thisObjTwo) // true
 
 /* 
 here we go again using the same getMyThis function and this time it is returning
@@ -182,38 +200,38 @@ different object.
 
 const WhatIsThisInObj = {
   normalFunc: function () {
-    return this; // object
+    return this // object
   },
   arrowFunc: () => {
-    return this; // empty object
+    return this // empty object
   },
   nestedNormal: function () {
     return function () {
       // return this // global
-    };
+    }
   },
   nestedNormal2: function () {
-    return () => this; // object
+    return () => this // object
   },
 
   nestedArrow: () => {
-    return () => this; // empty object
+    return () => this // empty object
   },
   nestedArrow2: () => {
     return function () {
       // return this // global
-    };
+    }
   },
-};
+}
 
-console.log("normalFunc Obj", WhatIsThisInObj.normalFunc());
-console.log("arrowFunc Obj", WhatIsThisInObj.arrowFunc());
-console.log("nestedNormal Obj", WhatIsThisInObj.nestedNormal()());
-console.log("nestedNormal2 Obj", WhatIsThisInObj.nestedNormal2()());
-console.log("nestedArrow Obj", WhatIsThisInObj.nestedArrow()());
-console.log("nestedArrow2 Obj", WhatIsThisInObj.nestedArrow2()());
+console.log('normalFunc Obj', WhatIsThisInObj.normalFunc())
+console.log('arrowFunc Obj', WhatIsThisInObj.arrowFunc())
+console.log('nestedNormal Obj', WhatIsThisInObj.nestedNormal()())
+console.log('nestedNormal2 Obj', WhatIsThisInObj.nestedNormal2()())
+console.log('nestedArrow Obj', WhatIsThisInObj.nestedArrow()())
+console.log('nestedArrow2 Obj', WhatIsThisInObj.nestedArrow2()())
 
-console.log("----------Invoking a function as method----------");
+console.log('----------Invoking a function as method----------')
 
 // ------------------------------------------------------------------------------
 
@@ -222,8 +240,8 @@ console.log("----------Invoking a function as method----------");
 // ///////////////////////////////////////
 
 /* 
-'Constructor function' can be declared just like any other function.
-They can use 'declaration' and 'expression' for constructing 'new object'.
+* 'Constructor function' can be declared just like any other function.
+* They can use 'declaration' and 'expression' for constructing 'new object'.
 
 'Constructor function' are function that we use to create and initialise
 object instances.
@@ -231,21 +249,21 @@ object instances.
 
 // we use keyword 'new' to invoke constructor function
 function whatMyContext() {
-  this.name = "whatMyContext function";
+  this.name = 'whatMyContext function'
   // return this // global
 }
 // invoking
-console.log("whatMyContext->", whatMyContext()); // global window object
-const a = new whatMyContext();
-console.log("new whatMyContext-> a ", a); // whatMyContext { name: 'whatMyContext function' }
+console.log('whatMyContext->', whatMyContext()) // global window object
+const a = new whatMyContext()
+console.log('new whatMyContext-> a ', a) // whatMyContext { name: 'whatMyContext function' }
 
-console.log("typeof a is", typeof a); // object
+console.log('typeof a is', typeof a) // object
 
 /* 
 re-calling Function() constructors from chapter.
 they enable us to new function from string. 3*/
-const sum = new Function("a", "b", "return a + b");
-console.log(sum(1, 2));
+const sum = new Function('a', 'b', 'return a + b')
+console.log(sum(1, 2))
 /* 
 DONT MIX FUNCTION() CONSTRUCTOR WITH CONSTRUCTOR FUNCTIONS.
 Here we are studying constructor function that create and initialise
@@ -254,15 +272,15 @@ object instance
 
 function Knight() {
   this.skill = function () {
-    return this;
-  };
+    return this
+  }
 }
 
-let knight1 = new Knight();
-let knight2 = new Knight();
+let knight1 = new Knight()
+let knight2 = new Knight()
 
-console.log(knight1.skill() === knight1); // this will be knight1
-console.log(knight2.skill() === knight2); // this will be knight2
+console.log(knight1.skill() === knight1) // this will be knight1
+console.log(knight2.skill() === knight2) // this will be knight2
 /* 
 new keyword trigger a new empty object, object is passed
 to the constructor as this parameter thus becomes constructor's
@@ -281,15 +299,15 @@ will be borrowed by new function.
 // adding a return value of the function
 function Knight1() {
   this.skill = function () {
-    return this;
-  };
-  return 1;
+    return this
+  }
+  return 1
 }
-console.log(Knight1()); // 1
-let samurai1 = new Knight1();
-console.log(samurai1); // Knight1 {skill: ƒ}
-console.log(typeof samurai1); // object
-console.log(typeof samurai1.skill === "function"); // true
+console.log(Knight1()) // 1
+let samurai1 = new Knight1()
+console.log(samurai1) // Knight1 {skill: ƒ}
+console.log(typeof samurai1) // object
+console.log(typeof samurai1.skill === 'function') // true
 
 /* 
 - if we call Knight1 function it returns 1 and 
@@ -304,60 +322,63 @@ console.log(typeof samurai1.skill === "function"); // true
 // /////////////////////////////////////////
 
 let puppy = {
-  labradors: false,
+  labrador: false,
   re: this, // empty object
   func: function () {
-    return this; // object
+    return this // object
   },
   nestedFunc: function () {
     return function () {
       // return this // global
-    };
+    }
   },
+
+  // Arrow functions inherit the this
+  // context from the enclosing execution context
   nestedFunc2: function () {
-    return () => this; // object
+    return () => this // object
   },
   arrow: () => {
-    return this; // empty object
+    return this // empty object
   },
   nestedArrow: () => {
-    return () => this; // empty object
+    return () => this // empty object
   },
   nestedArrow2: () => {
     return function () {
       // return this // global object
-    };
+    }
   },
-};
-
-function Dog() {
-  this.labrador = true;
-  this.name = "knight";
-  return puppy;
 }
 
-let dog = new Dog();
+function Dog() {
+  this.labrador = true
+  this.name = 'knight'
+  return puppy
+}
 
-console.log("DOG", dog);
+let dog = new Dog()
+
+console.log('DOG', dog)
 // {labrador: false, re: Window}
-console.log(dog === puppy); // true
-console.log(dog.labrador === puppy); // false
-console.log("dog.re", dog.re); // empty { }
-console.log("dog.func", dog.func()); // object
+console.log(dog === puppy) // true
+console.log(dog.labrador === puppy) // false
+console.log('dog.re', dog.re) // empty { }
+console.log('dog.func', dog.func()) // object
 /*
 {
-  labradors: false,
+  labrados: false,
   re: {},
   func: [Function: func],
   nestedFunc: [Function: nestedFunc],
   arrow: [Function: arrow]
 }  
 */
-console.log("dog.nestedFunc", dog.nestedFunc()()); // global
-console.log("dog.nestedFunc2", dog.nestedFunc2()()); // object
-console.log("dog.arrow", dog.arrow()); // empty object
-console.log("dog.nestedArrow", dog.nestedArrow()()); //  empty object
-console.log("dog.nestedArrow2", dog.nestedArrow2()()); // // global
+console.log('dog.nestedFunc', dog.nestedFunc()()) // global
+console.log('dog.nestedFunc2', dog.nestedFunc2()()) // object
+console.log('dog.arrow', dog.arrow()) // empty object
+console.log('dog.nestedArrow', dog.nestedArrow()()) //  empty object
+console.log('dog.nestedArrow2', dog.nestedArrow2()()) // // global
 
 /* 
 when we return an object from a contractor function, that object ( puppy )
@@ -379,7 +400,7 @@ summary
 - and a newly created object is returned
 */
 
-console.log("------Constructor ends------------");
+console.log('------Constructor ends------------')
 // ------------------------------------------------------------------------------
 
 // /////////////////////////
@@ -387,30 +408,28 @@ console.log("------Constructor ends------------");
 // ////////////////////////
 
 function Button() {
-  this.clicked = false;
+  this.clicked = false
 
   // this inside another function declaration ( nested function declaration )
   // refer to window object in non stict mode
   this.click = function () {
-    this.clicked = true; // this refer to window object when invoked with click
-    console.log("BUTTON this", this);
+    this.clicked = true // this refer to window object when invoked with click
+    console.log('BUTTON this', this)
 
     this.insider = function () {
-      return this;
-    };
-    return this;
-  };
+      return this
+    }
+    return this
+  }
 }
 
 // /////////////////////////////
 // call with addEventListener //
 // /////////////////////////////
 /*
-function Button() {
-  console.log("THIS outside", this)
-}
+const button = new Button();
 
-ele.addEventListener("click", () => Button()) 
+ele.addEventListener( "click", button.click ) 
 
 after clicking the event you can see that this will refer to the window object
 
@@ -421,11 +440,11 @@ reason -> before dot, the thing that is calling the function is an HTML element 
 // call as method //
 // /////////////////
 
-let button = new Button();
-console.log("button.click", button.click()); // Button object
-console.log("button.clicked", button.clicked); // true
-console.log("button.insider", button.insider()); // Button object
-let ele = document.getElementById("test");
+let button = new Button()
+console.log('button.click', button.click()) // Button object
+console.log('button.clicked', button.clicked) // true
+console.log('button.insider', button.insider()) // Button object
+let ele = document.getElementById('test')
 // ele.addEventListener("click", button.click) // HTML Element button
 
 /* 
@@ -433,22 +452,22 @@ with bind you can bind the object button and send it with the event listner
 so when ever click invoke the function, the function will
 refer to object button
 */
-ele.addEventListener("click", button.click.bind(button)); // true
+ele.addEventListener('click', button.click.bind(button)) // true
 
 function juggle() {
-  let result = 0;
+  let result = 0
   for (let n = 0; n < arguments.length; n++) {
-    result += arguments[n];
+    result += arguments[n]
   }
-  this.result = result;
+  this.result = result
   // return result
 }
 
-let ninja1 = {};
+let ninja1 = {}
 let ninja2 = {
-  name: "ninja2", // you can also use an object the already have property
+  name: 'ninja2', // you can also use an object the already have property
   rank: 2,
-};
+}
 
 /* 
 'apply' have two paramenter
@@ -458,18 +477,18 @@ second is an array of values to be used as the invocation argument
 'call' method is similar to apply expect the second argument 
 is passed directly in the argument list rather than as an array
 */
-juggle.apply(ninja1, [1, 2, 3, 4, 5]);
-juggle.call(ninja2, 6, 7, 8, 9);
+juggle.apply(ninja1, [1, 2, 3, 4, 5])
+juggle.call(ninja2, 6, 7, 8, 9)
 
-console.log("ninja1", ninja1); // {result: 15}
-console.log("ninja2", ninja2); // {name: "ninja2", rank: 2, result: 30}
+console.log('ninja1', ninja1) // {result: 15}
+console.log('ninja2', ninja2) // {name: "ninja2", rank: 2, result: 30}
 
 // ------------------------------------------------------------------
 // ///////////////////////////////
 // forcing context in call back //
 // ///////////////////////////////
 
-let weapons = [{ type: "kusarigama" }, { type: "katana" }, { type: "odachi" }];
+let weapons = [{ type: 'kusarigama' }, { type: 'katana' }, { type: 'odachi' }]
 // console.log(weapons[0]) // { type: "kusarigama" } // typeof -> object
 // console.log(typeof weapons) // typeof -> object
 
@@ -480,7 +499,7 @@ function foreach(list, callback) {
     - the list element passed 
     */
     //              this,  arguments
-    callback.call(list[n], n); // { type: "kusarigama" }, passing in 'n'
+    callback.call(list[n], n) // { type: "kusarigama" }, passing in 'n'
   }
 }
 
@@ -488,9 +507,9 @@ function foreach(list, callback) {
 foreach(weapons, function (index) {
   // index will be our 'n'
   // this.result = index;
-  console.log(this); // current entry will become current context
-  console.log(this === weapons[index]);
-});
+  console.log(this) // current entry will become current context
+  console.log(this === weapons[index])
+})
 
 /* 
 when to use call and when to use apply...?
