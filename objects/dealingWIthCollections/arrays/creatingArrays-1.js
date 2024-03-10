@@ -42,6 +42,7 @@ console.log(ninjas.length)
 // automatically expanded to accommodate the new element:
 ninjas[4] = 'Ishi'
 if (ninjas.length === 5) console.log('Arrays are automatically expanded')
+// [ 'Kuma', 'Hattori', 'Yagyu', <1 empty item>, 'Ishi' ]
 /*
  *  We’ve essentially created a hole in the array, and the item at index 3 is
  *  undefined. This also changes the value of the length property, which now

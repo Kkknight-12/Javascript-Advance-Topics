@@ -65,7 +65,7 @@ function makeLoggable(target) {
   return new Proxy(target, {
     // A get trap that logs property reads
     get: (target, property) => {
-      return target[property]
+      return target[property] || 'property does not exist'
     },
 
     // A set trap that logs property writes

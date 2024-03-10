@@ -24,7 +24,7 @@ const items = [1, 2, 3, 4, 5]
 const allNumbers = items.every((item) => {
   return typeof item === 'number'
 })
-console.log(allNumbers)
+console.log(allNumbers) // true
 
 // The following snippet shows how to use the some method to test whether at
 // least one item in an array is a number:
@@ -33,7 +33,7 @@ const someNumbers = items2.some((item) => {
   return typeof item === 'number'
 })
 
-console.log(someNumbers)
+console.log(someNumbers) // true
 
 // ----------------------------------------------------------
 // Searching arrays
@@ -46,7 +46,7 @@ const items3 = [1, 2, 3, 4, 5, 6]
 const firstEvenItem = items3.find((item) => {
   return item % 2 === 0
 })
-console.log(firstEvenItem)
+console.log(firstEvenItem) // 2
 
 // filter
 
@@ -56,7 +56,7 @@ const items5 = [1, 2, 3, 4, 5, 6]
 const evenItems = items5.filter((item) => {
   return item % 2 === 0
 })
-console.log(evenItems)
+console.log(evenItems) // [2, 4, 6]
 
 // indexOf
 
@@ -76,7 +76,7 @@ const items4 = [1, 2, 3, 4, 5, 6]
 const firstEvenItemIndex = items4.findIndex((item) => {
   return item % 2 === 0
 })
-console.log('firstEvenItemIndex ', firstEvenItemIndex)
+console.log('firstEvenItemIndex ', firstEvenItemIndex) // element [2] at index 1
 // return undefined if no item passes the test
 
 // lastIndexOf
@@ -88,23 +88,32 @@ const lastIndexOf5 = items5A.lastIndexOf(5)
 console.log(lastIndexOf5) // 5
 
 // includes
-
+// syntax: includes(searchElement, fromIndex)
 // The following snippet shows how to use the includes method to test whether
 // an array contains a certain value:
 const items6 = [1, 2, 3, 4, 5, 6]
 
 const includes1 = items6.includes(1)
-console.log(includes1)
+console.log(includes1) // true
 
 const includes2 = items5.includes(0)
-console.log(includes2)
+console.log(includes2) // false
 
 // The following snippet shows how to use the includes method to test whether
 // an array contains a certain value starting from a certain index:
 const items7 = [1, 2, 3, 4, 5, 6]
 
+// search for 1
+// from index 1
 const includes3 = items7.includes(1, 1)
 console.log(includes3)
 
+// search for 1
+// from index 2
 const includes4 = items7.includes(1, 2)
 console.log(includes4)
+
+// search for 1
+// from index 0
+const includes5 = items7.includes(1, 0)
+console.log(includes5)
