@@ -1,3 +1,5 @@
+// apply Trap
+
 /*
  * Besides being used for logging property accesses, proxies can be used for
  * measuring the performance of function invocations, without even modifying
@@ -75,6 +77,68 @@ isPrime(1299827)
  * isPrime invocation.
  *  */
 
+// -----------------------------------------------------------------------------
+
+function delay(callBack, ms) {
+  this.kon = 'kya ptaa'
+  // return a wrapper that passes the call to
+  // callBack function after the timeout
+  return function () {
+    // (*)
+    setTimeout(() => callBack.apply(this, arguments), ms)
+  }
+}
+
+function sayHi(user) {
+  console.log(this.kon)
+  console.log(`Hello, ${user}!`)
+}
+
+console.log('say hi length ', sayHi.length) // 1
+
+// after this wrapping, calls to sayHi will be delayed for 3 seconds
+sayHi = delay(sayHi, 3000)
+
+sayHi('John') // Hello, John! (after 3 seconds)
+
+/*
+ * The wrapper function (*) performs the call after the timeout.
+ * But a wrapper function does not forward property read/write operations or
+ * anything else.
+ * After the wrapping, the access is lost to properties of the original
+ * functions, such as name, length and others:
+ *  */
+
+console.log('say hi length ', sayHi.length) // 0
+
+// -----------------------------------------------------------------------------
+
+// Proxy is much more powerful, as it forwards everything to the target object.
+
+function delayP(callback, ms) {
+  //
+  return new Proxy(callback, {
+    // trap to intercept the call
+    apply(target, thisArg, args) {
+      setTimeout(() => target.apply(thisArg, args), ms)
+    },
+  })
+}
+
+function sayHiP(user) {
+  console.log(`Hello, ${user}!`)
+}
+
+console.log('say hi length ', sayHiP.length) // 1
+
+sayHiP = delayP(sayHiP, 3000)
+
+console.log('say hi length ', sayHiP.length) // 1
+
+sayHiP('Jhonny') // Hello, John! (after 3 seconds)
+
+// -----------------------------------------------------------------------------
+
 // some more examples
 
 // Example 1
@@ -104,6 +168,8 @@ console.log(factorial(5)) // Output: 120
 
 console.log('---------------------------------') // Output: 120
 
+// -----------------------------------------------------------------------------
+
 // Example 2
 function greet(name) {
   console.log(`Hello, ${name}!`)
@@ -125,6 +191,8 @@ const greetProxy = new Proxy(greet, {
 greetProxy('John') // Output: Hello, JOHN!
 
 console.log('---------------------------------') // Output: 120
+
+// -----------------------------------------------------------------------------
 
 // Example 3
 function sayHello() {

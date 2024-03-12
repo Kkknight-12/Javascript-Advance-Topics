@@ -22,7 +22,7 @@
 function Folder() {
   // creating proxy inside Folder function
   return new Proxy(
-    {},
+    {}, // target is an empty object
     {
       get: (target, property) => {
         console.log('Reading ' + property)
