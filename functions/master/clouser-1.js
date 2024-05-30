@@ -13,21 +13,21 @@
  */
 
 // global variables
-var outerValue = "Knight";
+var outerValue = 'Knight';
 var later; // innerFunction()
 
 function outerFunction() {
   // local variable
-  var innerValue = "ninja";
+  var innerValue = 'ninja';
 
   function innerFunction() {
-    if (outerValue === "Knight") {
+    if (outerValue === 'Knight') {
       // global variable is accessible
-      console.log("i can see Knight");
+      console.log('i can see Knight');
     }
-    if (innerValue === "ninja") {
+    if (innerValue === 'ninja') {
       // local variable is accessible
-      console.log("i can see ninja");
+      console.log('i can see ninja');
     }
   }
   // creating refernce to global variable
@@ -59,7 +59,7 @@ declaration defined, but the closure is created that encompasses the function
 definition as we as all variables in scope at the point of function definition.
 */
 
-console.log("-----------------");
+console.log('-----------------');
 
 // -------------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ console.log("-----------------");
 // private variable //
 // ///////////////////
 
-console.log("PRIVATE VARIABLES");
+console.log('PRIVATE VARIABLES');
 /*
 - private variables — properties of an object that are hidden from outside parties.
 - JavaScript doesn’t have native support for private variables.
@@ -96,10 +96,10 @@ let TeamA = new Football();
 // incrementing
 TeamA.goal();
 
-console.log("goals", TeamA.goals); //undefined
+console.log('goals', TeamA.goals); //undefined
 // private data is inaccessible to us
 
-console.log("getGoals", TeamA.getGoals()); // 1
+console.log('getGoals', TeamA.getGoals()); // 1
 // we are able to access internal goals count
 
 // creating new Team
@@ -113,7 +113,7 @@ using closure allows the state of Football to be maintained within a method,
 without letting it be directly accessed by a user of the method - because variable is available to inner methods via their closures, but not to code that lies outside the constructor.
 */
 
-console.log("----PRIVATE VARIABLES INTRO ENDS-----");
+console.log('----PRIVATE VARIABLES INTRO ENDS-----');
 
 // -------------------------------------------------------------------------------------
 
@@ -142,20 +142,20 @@ function animateIt(elementID) {
   //                       callback
   var timer = setInterval(function () {
     if (tick < 10) {
-      elem.style.left = elem.style.top = tick + "px";
-      console.log("tick", tick); // increment by 1 every time till reach 100
+      elem.style.left = elem.style.top = tick + 'px';
+      console.log('tick', tick); // increment by 1 every time till reach 100
       tick++;
     } else {
       clearInterval(timer);
 
       if (tick === 10) {
-        console.log("tick accessed via a colsure.");
+        console.log('tick accessed via a colsure.');
       }
       if (elem) {
-        console.log("Element also accessed via a closure");
+        console.log('Element also accessed via a closure');
       }
       if (timer) {
-        console.log("Timer reference also obtained via a closure");
+        console.log('Timer reference also obtained via a closure');
       }
     }
   }, 300);
@@ -175,7 +175,7 @@ function animateIt(elementID) {
 - private 'bubble' of variables
 */
 
-console.log("-------using closure with callbacks ENDS-------");
+console.log('-------using closure with callbacks ENDS-------');
 // -------------------------------------------------------------------------------------
 
 // ///////////////////
@@ -197,13 +197,8 @@ Two types of EXECUTION CONTEXT
 - executing
 - whereas a new FUNCTION EXECUTION CONTEXT is created on each function invocation
 
-- FUNCTION EXECUTION CONTEXT is an object on which our function is invoked, which
-- can be accessed through "this" keyword.
-
-WARNING: Dont confuse FUNCTION EXECUTION CONTEXT with EXECUTION CONTEXT.
-
-- EXECUTION CONTEXT is an internal Js concept which it uses to track the execution
-- of our functions.
+WARNING: Dont confuse FUNCTION EXECUTION CONTEXT with FUNCTION CONTEXT.
+FUNCTION CONTEXT is the object on which the function is invoked, which can be accessed through "this" keyword.
 
 - Js is single-threaded. One piece of code is executed at a time.
 - Everytime a function is invoked. current execution context is stopped
@@ -211,15 +206,16 @@ WARNING: Dont confuse FUNCTION EXECUTION CONTEXT with EXECUTION CONTEXT.
 - function execution context is discarded. And Caller ( the function which called it )
 - execution context is restored.
 
-- EXECUTION CONTEXT STACK is used to keep track of all these execution contexts- both
+- EXECUTION CONTEXT STACK | STACK is used to keep track of all these execution contexts- both
 - one that's executing and one that is waiting.
 
 - STACK is a Data Structure in which you can put new items only to top and can
 - take existing items only from top.
+- This is why it is called LIFO (Last In First Out) data structure.
 */
 
 function sneak(ninja) {
-  crouch(ninja + " time running"); // calling another function
+  crouch(ninja + ' time running'); // calling another function
 }
 
 function crouch(message) {
@@ -227,8 +223,8 @@ function crouch(message) {
 }
 
 // funciton call from global code
-sneak("first");
-sneak("second");
+sneak('first');
+sneak('second');
 
 // -------------------------------------------------------------------------------------
 
@@ -255,7 +251,7 @@ sneak("second");
 
 // identifier      value
 // variable
-var ninjaLE = "Hattori Hanzo";
+var ninjaLE = 'Hattori Hanzo';
 console.log(ninjaLE);
 
 // -------------------------------------------------------------------------------------
@@ -274,13 +270,13 @@ console.log(ninjaLE);
 */
 
 // global variable and function
-var ninjaN = "Misashi";
+var ninjaN = 'Misashi';
 
 function nesting() {
   /*
   scope - https://www.w3schools.com/js/js_scope.asp */
   // function scope
-  var action = "Sneak";
+  var action = 'Sneak';
 
   function report() {
     var reportNum = 3;
@@ -316,24 +312,24 @@ nesting();
 */
 
 // global variable
-var ninjaNLE = "Yamamoto";
+var ninjaNLE = 'Yamamoto';
 
 function sneakNLE() {
   // have access to local action and global ninjaNLE
-  var action = "Skulking";
+  var action = 'Skulking';
 
   function report() {
     // have access to local intro and outer action and global ninjaNLE
-    var intro = "Aye Aye..!";
+    var intro = 'Aye Aye..!';
 
-    if (intro === "Aye Aye..!") {
-      console.log("local");
+    if (intro === 'Aye Aye..!') {
+      console.log('local');
     }
-    if (action === "Skulking") {
-      console.log("Outer");
+    if (action === 'Skulking') {
+      console.log('Outer');
     }
-    if (ninjaNLE === "Yamamoto") {
-      console.log("Global");
+    if (ninjaNLE === 'Yamamoto') {
+      console.log('Global');
     }
   }
   report();
